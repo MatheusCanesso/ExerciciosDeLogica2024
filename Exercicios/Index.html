@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercicios</title>
+</head>
+
+<body>
+    <h1>Fibonacci</h1>
+    <label for="num1Fibo">Digite um número:</label>
+    <input id="num1Fibo" type="number">
+    <button onclick="Ffibonacci()">Enviar</button>
+    <div id="resultado01"></div>
+    <hr>
+    <h1>Fatorial</h1>
+    <label for="num1Fato">Digite um número:</label>
+    <input id="num1Fato" type="number">
+    <button onclick="Ffatorial()">Enviar</button>
+    <div id="resultado02"></div>
+    <hr>
+    <h1>Ternos</h1>
+    <label for="ternos">Digite a sequencia de Ternos:</label>
+    <input id="ternos" type="text">
+    <button onclick="Fternos()">Enviar</button>
+    <div id="resultado03"></div>
+    <hr>
+    <h1>Emails</h1>
+    <label for="numberE">Digite a quantidade de Emails:</label>
+    <input id="numberE" type="number">
+    <label for="Pchave">Digite a palavra chave:</label>
+    <input id="Pchave" type="text">
+    <label for="listE">Digite a Lista de Emails:</label>
+    <textarea id="listE" type="text"></textarea>
+    <button onclick="FBuscarEmails()">Enviar</button>
+    <h3>Resultados: </h3>
+    <ul id="resultadosUl"></ul>
+    <hr>
+    <h1>Fitas</h1>
+    <label for="tamanhoFita">Tamanho de Fita: </label>
+    <input id="tamanhoFita" type="number">
+    <label for="textoFita">Texto da fita: </label>
+    <input id="textoFita" type="text">
+    <button onclick="calcularFitas()">Calcular</button>
+    <p>Repetições: <span id="resultado04">0</span></p>
+    <hr>
+    <h1>Fizz Buzz</h1>
+    <label for="numberInput">Digite um número: </label>
+    <input id="numberInput" type="number">
+    <button onclick="calcularFizzBuzz()">Calcular</button>
+    <h3>Resultados: </h3>
+    <div id="resultado05"></div>
+    <hr>
+    <h1>Listas  </h1>
+    <label for="numberInputSize">Tamanho: </label>
+    <input id="numberInputSize" type="number">
+    <br> 
+    <script>
+        function Ffibonacci() {
+            const n = parseInt(document.getElementById('num1Fibo').value); // convertendo a entrada em inteiro
+            if (n < 1 || n >= 46) {
+                document.getElementById('resultado01').innerHTML = "erro";
+                return; // verificando se o valor é maior ou menor que o estabelecido
+            }
+            let fib = [0, 1]; // array para armazenar o resultado
+            while(fib.length < n){
+                const currentLength = fib.length;
+                fib.push(fib[currentLength - 1] + fib[currentLength - 2 ]);
+            }
+            document.getElementById('resultado01').innerHTML = fib + " = " + n + " "; // exibe o resultado na div do html
+        }
+        function Ffatorial() {
+            const n = parseInt(document.getElementById('num1Fato').value);
+            if (n < 1 || n > 40) {
+                document.getElementById('resultado02').innerHTML = "Erro";
+                return; // verificação se o numero digitado é maior que 1
+            } else {
+                let fatorial = '1'; // valor do fatorial
+                let sequencia = ""; // variavel para armazenar a sequencia decrecente dos numeros
+                for (let i = n; i > 0; i--) { // laço para calcular os proximos numeros e soma os dois numero anteriores
+                   fatorial *= i;
+                   sequencia += i + (i > 1 ? " . " : "");
+                }
+                document.getElementById('resultado02').innerHTML = n + "!" + "  =  " + sequencia + " = " + fatorial;
+            }
+            // let fib = []; // array para armazenar o resultado
+        }
+        function Fternos(){
+            const ternos = document.getElementById('ternos').value; // Variavel com o valor digitado
+            let Tremovidos = 0; // Variavel de ternos removidos
+            for (let i = 0; i < ternos.length - 1; i++){ // inicialização da variavel i e verificando se
+                if(ternos[i] === ternos[i + 1]) { // o tamanho da variavel ternos é maior que 0 e assim
+                    Tremovidos++; // diminuindo - 1 da lista e acrescentando mais um na lista
+                }
+            }
+            document.getElementById('resultado03').innerHTML = "A quantidade de Ternos removidos são de: " + Tremovidos;
+        }
+        function FBuscarEmails(){
+            // Declarando variaveis aos seus elementos
+            const emailsContador = parseInt(document.getElementById('numberE').value);
+            const palavraChave = document.getElementById('Pchave').value;
+            const resultadosUl = document.getElementById('resultadosUl');
+            const listaEmails = document.getElementById('listE').value.split('\n').filter((input) => !!input);
+            // Declarando variavel ao seu elemento e fazendo um corte em cada linha com o split
+            // que identifica o '\n' e faz uma filtragem caso o usuario pule uma linha sem conteudo
+            // parametro = custo da função 
+            if (listaEmails.length !== emailsContador) {
+                alert("Erro!");
+                return;
+            }
+            const resultados = listaEmails.filter((email) => email.toLowerCase().includes(palavraChave));
+            // const teste = listaEmails.filter((email, index, array) => {
+            //     if(index <= 4){
+                    
+            //     }
+            //     return email.toLowerCase().includes(palavraChave));   
+            // }
+            // Declaração de variavel que faz uma filtragem na listaEmails e pede um parametro
+            // para fazer verificação se o conteudo digitado está em capslock e verifica se a
+            // palavra chave digitada existe nessa lista
+            if(resultados.length > 0) { // verifica se o numero de elementos da variavel resultados é maior que 0
+                resultados.forEach((email) => { // esse foreach vai exibir cada item do array 'resultados'm um de cada vez
+                    let novaLista = document.createElement("li"); // Declarando variavel e nela está manipulando o DOM atraves do 'createElement'
+                    novaLista.textContent = email;
+                    resultadosUl.appendChild(novaLista); // Essa função está adicionando o elemento filho dentro de um elemento pai
+                });
+            } else {
+                document.getElementById('resultado').innerHTML = "Nenhum Email";
+            }
+        }
+        function calcularFitas() {
+            // Declarando variaveis aos seus elementos
+            const tamanho = document.getElementById("tamanhoFita").value;
+            const texto = document.getElementById("textoFita").value;
+            const comTexto = texto.length; // O Length verifica o tamanho de caracteres no texto digitado e armazena em uma variavel
+            const repeTextos = Math.floor(tamanho / comTexto); // Declaramos uma variavel e nela é armazenada o valor arredondado (floor) da divisão do texto com o seu comprimento
+            document.getElementById("resultado04").innerText = repeTextos;
+        }
+        function calcularFizzBuzz() {
+            // Declarando variaveis aos seus elementos
+            let num = document.getElementById("numberInput").value;
+            let result = document.getElementById("resultado05");
+            // Fizz = Multiplo de 3
+            // Buzz = Multiplo de 5
+            // Fizz Buzz = Multiplo de 3 e 5
+            for (let i = 1; i <= num; i++) {
+                let saida = "";
+
+                if(i % 3 === 0 && i % 5 === 0) {
+                    saida = "Fizz Buzz";
+                } else if (i % 3 === 0) {
+                    saida = "Fizz";
+                } else if (i % 5 === 0) {
+                    saida = "Buzz";
+                } else {
+                    saida = i;
+                }
+                let paraI = document.createElement("p");
+                paraI.textContent = saida;
+                result.appendChild(paraI);
+            }
+        }
+   </script>
+</body>
+
+</html>
